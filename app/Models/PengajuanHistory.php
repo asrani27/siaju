@@ -19,6 +19,20 @@ class PengajuanHistory extends Model
         'keterangan',
         'user_id',
     ];
+    
+    /**
+     * Alias for status field to maintain compatibility.
+     * The migration uses 'status' but some code uses 'status_baru'.
+     */
+    public function setStatusBaruAttribute($value)
+    {
+        $this->attributes['status'] = $value;
+    }
+    
+    public function getStatusBaruAttribute()
+    {
+        return $this->attributes['status'];
+    }
 
     /**
      * Get the pengajuan that owns the history.

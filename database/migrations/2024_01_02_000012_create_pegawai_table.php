@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('nip', 50)->unique()->comment('Nomor Induk Pegawai');
             $table->string('nama', 255)->comment('Nama lengkap pegawai');
-            $table->string('skpd', 255)->comment('Satuan Kerja Perangkat Daerah');
+            $table->foreignId('skpd_id')->nullable()->constrained('skpd')->cascadeOnDelete()->comment('FK ke skpd');
             $table->string('telp', 20)->nullable()->comment('Nomor telepon');
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->comment('FK ke users');
             $table->timestamps();
 
             // Indexes
             $table->index('nip');
-            $table->index('skpd');
+            $table->index('skpd_id');
             $table->index('user_id');
         });
     }

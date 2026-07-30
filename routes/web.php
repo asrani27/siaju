@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\ProfilController;
 use App\Http\Controllers\User\PengajuanController as UserPengajuanController;
 use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\Admin\PendudukController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\BantuanController;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\PersyaratanController;
+use App\Http\Controllers\Admin\SkpdController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,10 +39,12 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::post('/pengajuan/{pengajuan}/upload', [UserPengajuanController::class, 'uploadStore'])->name('user.pengajuan.upload.store');
     
     Route::get('/pengajuan/{id}', [UserPengajuanController::class, 'show'])->name('user.pengajuan.show');
+    Route::delete('/pengajuan/{id}', [UserPengajuanController::class, 'destroy'])->name('user.pengajuan.destroy');
+    Route::post('/pengajuan/{pengajuan}/kirim', [UserPengajuanController::class, 'kirim'])->name('user.pengajuan.kirim');
     
-    Route::get('/profil', function () {
-        return view('user.profil.index');
-    })->name('user.profil.index');
+    Route::get('/profil', [ProfilController::class, 'index'])->name('user.profil.index');
+    Route::put('/profil', [ProfilController::class, 'update'])->name('user.profil.update');
+    Route::post('/profil/password', [ProfilController::class, 'changePassword'])->name('user.profil.password');
 });
 
 // Admin Routes
@@ -78,8 +82,20 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/pengajuan/{id}', [PengajuanController::class, 'show'])->name('admin.pengajuan.show');
     Route::post('/pengajuan/{id}/status', [PengajuanController::class, 'updateStatus'])->name('admin.pengajuan.updateStatus');
     Route::post('/pengajuan/{id}/verifikasi', [PengajuanController::class, 'verifikasi'])->name('admin.pengajuan.verifikasi');
+    Route::post('/pengajuan/{id}/proses-verifikasi', [PengajuanController::class, 'prosesVerifikasi'])->name('admin.pengajuan.prosesVerifikasi');
     Route::post('/pengajuan/{id}/revisi', [PengajuanController::class, 'requestRevision'])->name('admin.pengajuan.revisi');
     Route::post('/pengajuan/{id}/tolak', [PengajuanController::class, 'tolak'])->name('admin.pengajuan.tolak');
+    Route::post('/pengajuan/{id}/upload-sk', [PengajuanController::class, 'uploadSk'])->name('admin.pengajuan.uploadSk');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('admin.pengaturan.index');
     Route::get('/bantuan', [BantuanController::class, 'index'])->name('admin.bantuan.index');
+    
+    Route::get('/skpd', [SkpdController::class, 'index'])->name('admin.skpd.index');
+    Route::get('/skpd/create', [SkpdController::class, 'create'])->name('admin.skpd.create');
+    Route::post('/skpd', [SkpdController::class, 'store'])->name('admin.skpd.store');
+    Route::get('/skpd/{skpd}', [SkpdController::class, 'show'])->name('admin.skpd.show');
+    Route::get('/skpd/{skpd}/edit', [SkpdController::class, 'edit'])->name('admin.skpd.edit');
+    Route::put('/skpd/{skpd}', [SkpdController::class, 'update'])->name('admin.skpd.update');
+    Route::delete('/skpd/{skpd}', [SkpdController::class, 'destroy'])->name('admin.skpd.destroy');
+    Route::post('/skpd/{skpd}/create-user', [SkpdController::class, 'createUser'])->name('admin.skpd.createUser');
+    Route::post('/skpd/{skpd}/reset-password', [SkpdController::class, 'resetPassword'])->name('admin.skpd.resetPassword');
 });

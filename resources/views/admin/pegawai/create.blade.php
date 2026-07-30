@@ -73,17 +73,18 @@
 
                 {{-- SKPD --}}
                 <div>
-                    <label for="skpd" class="block text-sm font-medium text-text mb-2">
+                    <label for="skpd_id" class="block text-sm font-medium text-text mb-2">
                         SKPD <span class="text-error">*</span>
                     </label>
-                    <input type="text" 
-                           id="skpd" 
-                           name="skpd" 
-                           value="{{ old('skpd') }}"
-                           class="w-full px-4 py-3 bg-surface rounded-xl border {{ $errors->has('skpd') ? 'border-error focus:ring-error/20' : 'border-gray-200 focus:ring-accent/20' }} focus:ring-2 transition-smooth text-sm"
-                           placeholder="Contoh: Dinas Komunikasi dan Informatika"
-                           maxlength="255">
-                    @error('skpd')
+                    <select id="skpd_id" 
+                            name="skpd_id" 
+                            class="w-full px-4 py-3 bg-surface rounded-xl border {{ $errors->has('skpd_id') ? 'border-error focus:ring-error/20' : 'border-gray-200 focus:ring-accent/20' }} focus:ring-2 transition-smooth text-sm">
+                        <option value="">-- Pilih SKPD --</option>
+                        @foreach($skpd as $s)
+                            <option value="{{ $s->id }}" {{ old('skpd_id') == $s->id ? 'selected' : '' }}>{{ $s->kode_skpd }} - {{ $s->nama_skpd }}</option>
+                        @endforeach
+                    </select>
+                    @error('skpd_id')
                     <p class="mt-2 text-sm text-error flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>

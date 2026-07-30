@@ -14,9 +14,9 @@ class PengajuanRevisi extends Model
 
     protected $fillable = [
         'pengajuan_id',
-        'persyaratan_id',
+        'pengajuan_file_id',
         'catatan',
-        'user_id',
+        'created_by',
     ];
 
     /**

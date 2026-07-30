@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pegawai;
+use App\Models\Skpd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,7 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Pegawai::with('user');
+        $query = Pegawai::with(['user', 'skpd']);
 
         // Search functionality
         if ($request->has('search') && $request->search) {
@@ -24,7 +25,9 @@ class PegawaiController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
                   ->orWhere('nip', 'like', "%{$search}%")
-                  ->orWhere('skpd', 'like', "%{$search}%");
+                  ->orWhereHas('skpd', function($q) use ($search) {
+                      $q->where('nama_skpd', 'like', "%{$search}%");
+                  });
             });
         }
 
@@ -42,7 +45,8 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('admin.pegawai.create');
+        $skpd = Skpd::orderBy('nama_skpd')->get();
+        return view('admin.pegawai.create', compact('skpd'));
     }
 
     /**
@@ -53,13 +57,14 @@ class PegawaiController extends Controller
         $validator = Validator::make($request->all(), [
             'nip' => 'required|string|max:50|unique:pegawai,nip',
             'nama' => 'required|string|max:255',
-            'skpd' => 'required|string|max:255',
+            'skpd_id' => 'required|exists:skpd,id',
             'telp' => 'nullable|string|max:20',
         ], [
             'nip.required' => 'NIP wajib diisi.',
             'nip.unique' => 'NIP sudah terdaftar.',
             'nama.required' => 'Nama wajib diisi.',
-            'skpd.required' => 'SKPD wajib diisi.',
+            'skpd_id.required' => 'SKPD wajib dipilih.',
+            'skpd_id.exists' => 'SKPD yang dipilih tidak valid.',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +73,7 @@ class PegawaiController extends Controller
                 ->withInput();
         }
 
-        Pegawai::create($request->only(['nip', 'nama', 'skpd', 'telp']));
+        Pegawai::create($request->only(['nip', 'nama', 'skpd_id', 'telp']));
 
         return redirect()->route('admin.pegawai.index')
             ->with('success', 'Data pegawai berhasil ditambahkan.');
@@ -87,7 +92,8 @@ class PegawaiController extends Controller
      */
     public function edit(Pegawai $pegawai)
     {
-        return view('admin.pegawai.edit', compact('pegawai'));
+        $skpd = Skpd::orderBy('nama_skpd')->get();
+        return view('admin.pegawai.edit', compact('pegawai', 'skpd'));
     }
 
     /**
@@ -98,13 +104,14 @@ class PegawaiController extends Controller
         $validator = Validator::make($request->all(), [
             'nip' => 'required|string|max:50|unique:pegawai,nip,' . $pegawai->id,
             'nama' => 'required|string|max:255',
-            'skpd' => 'required|string|max:255',
+            'skpd_id' => 'required|exists:skpd,id',
             'telp' => 'nullable|string|max:20',
         ], [
             'nip.required' => 'NIP wajib diisi.',
             'nip.unique' => 'NIP sudah terdaftar.',
             'nama.required' => 'Nama wajib diisi.',
-            'skpd.required' => 'SKPD wajib diisi.',
+            'skpd_id.required' => 'SKPD wajib dipilih.',
+            'skpd_id.exists' => 'SKPD yang dipilih tidak valid.',
         ]);
 
         if ($validator->fails()) {
@@ -113,7 +120,7 @@ class PegawaiController extends Controller
                 ->withInput();
         }
 
-        $pegawai->update($request->only(['nip', 'nama', 'skpd', 'telp']));
+        $pegawai->update($request->only(['nip', 'nama', 'skpd_id', 'telp']));
 
         return redirect()->route('admin.pegawai.index')
             ->with('success', 'Data pegawai berhasil diperbarui.');

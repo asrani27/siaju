@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Data Pegawai')
+@section('title', 'Data SKPD')
 
-@section('header_title', 'Data Pegawai')
-@section('header_subtitle', 'Kelola data pegawai SKPD')
+@section('header_title', 'Data SKPD')
+@section('header_subtitle', 'Kelola data SKPD')
 
 @push('styles')
 <style>
@@ -50,18 +50,29 @@
     </div>
     @endif
 
+    @if (session('error'))
+    <div class="glass-card rounded-2xl p-4 flex items-center gap-3 shadow-lg border-l-4 border-error">
+        <div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+        <p class="text-text font-medium">{{ session('error') }}</p>
+    </div>
+    @endif
+
     {{-- Stats Summary --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="glass-card rounded-2xl p-5 shadow-lg">
             <div class="flex items-center gap-4">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                 </div>
                 <div>
-                    <p class="text-2xl font-bold text-text">{{ $pegawai->total() }}</p>
-                    <p class="text-sm text-text-muted">Total Pegawai</p>
+                    <p class="text-2xl font-bold text-text">{{ $skpd->total() }}</p>
+                    <p class="text-sm text-text-muted">Total SKPD</p>
                 </div>
             </div>
         </div>
@@ -69,13 +80,13 @@
             <div class="flex items-center gap-4">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent to-success flex items-center justify-center shadow-md">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
-                    <div>
-                        <p class="text-2xl font-bold text-text">{{ $pegawai->pluck('skpd_id')->filter()->unique()->count() }}</p>
-                        <p class="text-sm text-text-muted">Total SKPD</p>
-                    </div>
+                <div>
+                    <p class="text-2xl font-bold text-text">{{ $skpd->whereNotNull('user_id')->count() }}</p>
+                    <p class="text-sm text-text-muted">Aktif User</p>
+                </div>
             </div>
         </div>
         <div class="glass-card rounded-2xl p-5 shadow-lg">
@@ -86,7 +97,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-2xl font-bold text-text">{{ $pegawai->currentPage() }} / {{ $pegawai->lastPage() }}</p>
+                    <p class="text-2xl font-bold text-text">{{ $skpd->currentPage() }} / {{ $skpd->lastPage() }}</p>
                     <p class="text-sm text-text-muted">Halaman</p>
                 </div>
             </div>
@@ -100,10 +111,10 @@
             <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
                 <div class="flex items-center justify-between lg:justify-start gap-4">
                     <div class="text-white">
-                        <h2 class="text-xl font-heading font-bold">Daftar Pegawai</h2>
-                        <p class="text-white/70 text-sm mt-0.5">Kelola data pegawai sistem</p>
+                        <h2 class="text-xl font-heading font-bold">Daftar SKPD</h2>
+                        <p class="text-white/70 text-sm mt-0.5">Kelola data SKPD sistem</p>
                     </div>
-                    <a href="{{ route('admin.pegawai.create') }}" 
+                    <a href="{{ route('admin.skpd.create') }}" 
                        class="lg:hidden inline-flex items-center gap-2 px-5 py-2.5 bg-white text-primary rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -111,7 +122,7 @@
                         <span class="text-sm">Tambah</span>
                     </a>
                 </div>
-                <form method="GET" action="{{ route('admin.pegawai.index') }}" class="flex-1 flex gap-2">
+                <form method="GET" action="{{ route('admin.skpd.index') }}" class="flex-1 flex gap-2">
                     <div class="relative flex-1">
                         <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -120,7 +131,7 @@
                                name="search" 
                                value="{{ request('search') }}"
                                class="search-input w-full pl-12 pr-4 py-3 bg-white rounded-xl border-0 text-sm transition-all duration-300 placeholder-text-muted"
-                               placeholder="Cari nama, NIP, atau SKPD...">
+                               placeholder="Cari kode atau nama SKPD...">
                     </div>
                     <button type="submit" 
                             class="px-5 py-3 bg-white/90 text-primary rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-white transition-all duration-300 shadow-md hover:shadow-lg">
@@ -130,7 +141,7 @@
                         <span class="hidden sm:inline">Cari</span>
                     </button>
                     @if(request('search'))
-                    <a href="{{ route('admin.pegawai.index') }}" 
+                    <a href="{{ route('admin.skpd.index') }}" 
                        class="px-5 py-3 bg-white/90 text-text rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-white transition-all duration-300 shadow-md">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -138,12 +149,12 @@
                         <span class="hidden sm:inline">Reset</span>
                     </a>
                     @endif
-                    <a href="{{ route('admin.pegawai.create') }}" 
+                    <a href="{{ route('admin.skpd.create') }}" 
                        class="hidden lg:inline-flex items-center gap-2 px-6 py-3 bg-white text-primary rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Tambah Pegawai
+                        Tambah SKPD
                     </a>
                 </form>
             </div>
@@ -155,59 +166,35 @@
                 <thead>
                     <tr class="gradient-header">
                         <th class="px-8 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">No</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">NIP</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Nama</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">SKPD</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Telepon</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Kode SKPD</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Nama SKPD</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">User</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
-                    @forelse ($pegawai as $index => $item)
+                    @forelse ($skpd as $index => $item)
                     <tr class="table-hover transition-all duration-200">
                         <td class="px-8 py-4">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                                <span class="text-xs font-bold text-primary">{{ ($pegawai->currentPage() - 1) * $pegawai->perPage() + $index + 1 }}</span>
+                                <span class="text-xs font-bold text-primary">{{ ($skpd->currentPage() - 1) * $skpd->perPage() + $index + 1 }}</span>
                             </div>
                         </td>
                         <td class="px-6 py-4">
                             <span class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-primary/5 to-accent/5 text-primary rounded-lg text-sm font-semibold">
-                                {{ $item->nip }}
+                                {{ $item->kode_skpd }}
                             </span>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="relative">
                                     <img class="w-10 h-10 rounded-xl object-cover ring-2 ring-white shadow-md" 
-                                         src="https://ui-avatars.com/api/?name={{ urlencode($item->nama) }}&background=00251e&color=fff" 
-                                         alt="{{ $item->nama }}">
+                                         src="https://ui-avatars.com/api/?name={{ urlencode($item->nama_skpd) }}&background=00251e&color=fff" 
+                                         alt="{{ $item->nama_skpd }}">
                                     <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-white"></div>
                                 </div>
-                                <span class="text-sm font-semibold text-text">{{ $item->nama }}</span>
+                                <span class="text-sm font-semibold text-text">{{ $item->nama_skpd }}</span>
                             </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center gap-1.5 text-sm text-text-secondary">
-                                <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                    </svg>
-                                </span>
-                                {{ $item->skpd ? $item->skpd->nama_skpd : '-' }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center gap-1.5 text-sm text-text-secondary">
-                                @if($item->telp)
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                    </svg>
-                                    {{ $item->telp }}
-                                @else
-                                    <span class="text-text-muted italic">-</span>
-                                @endif
-                            </span>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-center gap-1.5">
@@ -218,10 +205,10 @@
                                         </svg>
                                         Aktif
                                     </span>
-                                    <form action="{{ route('admin.pegawai.resetPassword', $item) }}" method="POST" class="inline">
+                                    <form action="{{ route('admin.skpd.resetPassword', $item) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" 
-                                                onclick="return confirm('Reset password user {{ $item->nama }} menjadi: siajuskppbjm?')"
+                                                onclick="return confirm('Reset password user {{ $item->nama_skpd }} menjadi: siajuskppbjm?')"
                                                 class="p-2 rounded-lg bg-warning/10 text-warning hover:bg-warning hover:text-white transition-all duration-300 shadow-sm"
                                                 title="Reset Password">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,10 +223,10 @@
                                         </svg>
                                         Belum
                                     </span>
-                                    <form action="{{ route('admin.pegawai.createUser', $item) }}" method="POST" class="inline">
+                                    <form action="{{ route('admin.skpd.createUser', $item) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" 
-                                                onclick="return confirm('Buat user untuk {{ $item->nama }}? Username: {{ $item->nip }}, Password: siajuskppbjm')"
+                                                onclick="return confirm('Buat user untuk {{ $item->nama_skpd }}? Username: {{ $item->kode_skpd }}, Password: siajuskppbjm')"
                                                 class="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-sm"
                                                 title="Buat User">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,7 +239,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-center gap-1.5">
-                                <a href="{{ route('admin.pegawai.show', $item) }}" 
+                                <a href="{{ route('admin.skpd.show', $item) }}" 
                                    class="p-2.5 rounded-xl bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300 shadow-sm"
                                    title="Detail">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,14 +247,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
                                 </a>
-                                <a href="{{ route('admin.pegawai.edit', $item) }}" 
+                                <a href="{{ route('admin.skpd.edit', $item) }}" 
                                    class="p-2.5 rounded-xl bg-secondary-light/20 text-secondary-dark hover:bg-secondary hover:text-white transition-all duration-300 shadow-sm"
                                    title="Edit">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </a>
-                                <form action="{{ route('admin.pegawai.destroy', $item) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.skpd.destroy', $item) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
@@ -284,7 +271,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="px-8 py-16 text-center">
+                        <td colspan="5" class="px-8 py-16 text-center">
                             <div class="flex flex-col items-center gap-4">
                                 <div class="w-20 h-20 rounded-full bg-surface-low flex items-center justify-center">
                                     <svg class="w-10 h-10 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -304,13 +291,13 @@
         </div>
 
         {{-- Pagination --}}
-        @if ($pegawai->hasPages())
+        @if ($skpd->hasPages())
         <div class="px-8 py-4 border-t border-gray-100 bg-surface-low">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <p class="text-sm text-text-muted">
-                    Menampilkan {{ $pegawai->firstItem() ?? 0 }} - {{ $pegawai->lastItem() ?? 0 }} dari {{ $pegawai->total() }} data
+                    Menampilkan {{ $skpd->firstItem() ?? 0 }} - {{ $skpd->lastItem() ?? 0 }} dari {{ $skpd->total() }} data
                 </p>
-                {{ $pegawai->links() }}
+                {{ $skpd->links() }}
             </div>
         </div>
         @endif

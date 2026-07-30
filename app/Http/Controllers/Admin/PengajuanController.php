@@ -158,17 +158,17 @@ class PengajuanController extends Controller
         // Create history record
         $pengajuan->histories()->create([
             'user_id' => Auth::id(),
-            'status_lama' => $oldStatus,
-            'status_baru' => 'revisi',
-            'catatan' => $request->catatan_revisi,
-            'tanggal_status' => now(),
+            'status' => 'revisi',
+            'judul' => 'Pengajuan Direvisi',
+            'keterangan' => $request->catatan_revisi,
         ]);
 
         // Create revision record
         $pengajuan->revisions()->create([
             'pengajuan_id' => $pengajuan->id,
+            'pengajuan_file_id' => null,
             'catatan' => $request->catatan_revisi,
-            'tanggal_revisi' => now(),
+            'created_by' => Auth::id(),
         ]);
 
         return redirect()
@@ -181,6 +181,7 @@ class PengajuanController extends Controller
      */
     public function verifikasi(Request $request, $id)
     {
+
         $request->validate([
             'action' => 'required|in:disetujui',
             'catatan' => 'nullable|string|max:1000',
@@ -197,10 +198,9 @@ class PengajuanController extends Controller
         // Create history record
         $pengajuan->histories()->create([
             'user_id' => Auth::id(),
-            'status_lama' => $oldStatus,
-            'status_baru' => 'selesai',
-            'catatan' => $request->catatan ?? 'Pengajuan disetujui.',
-            'tanggal_status' => now(),
+            'status' => 'selesai',
+            'judul' => 'Pengajuan Disetujui',
+            'keterangan' => $request->catatan ?? 'Pengajuan telah disetujui dan siap untuk diproses lebih lanjut.',
         ]);
 
         return redirect()
@@ -227,17 +227,17 @@ class PengajuanController extends Controller
         // Create history record
         $pengajuan->histories()->create([
             'user_id' => Auth::id(),
-            'status_lama' => $oldStatus,
-            'status_baru' => 'revisi',
-            'catatan' => $request->catatan_revisi,
-            'tanggal_status' => now(),
+            'status' => 'revisi',
+            'judul' => 'Pengajuan Direvisi',
+            'keterangan' => $request->catatan_revisi,
         ]);
 
         // Create revision record
         $pengajuan->revisions()->create([
             'pengajuan_id' => $pengajuan->id,
+            'pengajuan_file_id' => null,
             'catatan' => $request->catatan_revisi,
-            'tanggal_revisi' => now(),
+            'created_by' => Auth::id(),
         ]);
 
         return redirect()
@@ -264,14 +264,85 @@ class PengajuanController extends Controller
         // Create history record
         $pengajuan->histories()->create([
             'user_id' => Auth::id(),
-            'status_lama' => $oldStatus,
-            'status_baru' => 'ditolak',
-            'catatan' => $request->catatan_penolakan,
-            'tanggal_status' => now(),
+            'status' => 'ditolak',
+            'judul' => 'Pengajuan Ditolak',
+            'keterangan' => $request->catatan_penolakan,
         ]);
 
         return redirect()
             ->back()
             ->with('success', 'Pengajuan berhasil ditolak.');
+    }
+
+    /**
+     * Process verification from dashboard (update status to diproses).
+     */
+    public function prosesVerifikasi($id)
+    {
+        $pengajuan = Pengajuan::findOrFail($id);
+        $oldStatus = $pengajuan->status;
+
+        // Update status to diproses
+        $pengajuan->status = 'diproses';
+        $pengajuan->save();
+
+        // Create history record
+        $pengajuan->histories()->create([
+            'pengajuan_id' => $pengajuan->id,
+            'status' => 'diproses',
+            'judul' => 'Status Diubah ke Diproses',
+            'keterangan' => 'Pengajuan sedang dalam proses verifikasi oleh admin.',
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()
+            ->route('admin.pengajuan.show', $pengajuan->id)
+            ->with('success', 'Pengajuan berhasil diproses.');
+    }
+
+    /**
+     * Upload SK file for completed pengajuan.
+     */
+    public function uploadSk(Request $request, $id)
+    {
+        $request->validate([
+            'sk_file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+        ]);
+
+        $pengajuan = Pengajuan::findOrFail($id);
+
+        // Check if status is selesai
+        if ($pengajuan->status !== 'selesai') {
+            return redirect()
+                ->back()
+                ->with('error', 'SK file hanya dapat diupload untuk pengajuan yang sudah selesai.');
+        }
+
+        // Handle file upload
+        if ($request->hasFile('sk_file')) {
+            $file = $request->file('sk_file');
+            $fileName = 'SK_' . $pengajuan->nomor_pengajuan . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('sk-files', $fileName, 'public');
+            
+            // Update sk_file field
+            $pengajuan->sk_file = $filePath;
+            $pengajuan->save();
+
+            // Create history record
+            $pengajuan->histories()->create([
+                'user_id' => Auth::id(),
+                'status' => 'selesai',
+                'judul' => 'SK File Diupload',
+                'keterangan' => 'File SK (' . $file->getClientOriginalName() . ') telah diupload.',
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('success', 'File SK berhasil diupload.');
+        }
+
+        return redirect()
+            ->back()
+            ->with('error', 'Gagal mengupload file SK.');
     }
 }
