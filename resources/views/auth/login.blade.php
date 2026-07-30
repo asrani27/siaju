@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="light" lang="id">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -108,56 +109,66 @@
         }
     </style>
 </head>
+
 <body class="bg-surface text-on-surface font-body-md min-h-screen flex">
     <!-- Left Side - Branding -->
     <div class="hidden lg:flex lg:w-1/2 bg-primary relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-secondary rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-tertiary-fixed rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+            <div
+                class="absolute top-0 right-0 w-96 h-96 bg-secondary rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-64 h-64 bg-tertiary-fixed rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2">
+            </div>
         </div>
         <div class="relative z-10 flex flex-col justify-between p-12 w-full">
             <div class="flex items-center gap-3">
-                <img alt="SiAju SKPP Logo" class="h-12 w-auto brightness-0 invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATm778DoYQoQI0DRrQkR9is3lYMHjj_X2f44ilX4DKPfHuUqIeoPt1nM-xAD-RTr0o94gg90VS8snkRsahFf4XED83EFqAV6nJVJ4DWUVq-k2kJrbj0qARIfKO1Qt9qiDcWLUQ3CnbuT2XoYuSAPWgsOGucU719UOwr9Qb-gxNGw5fKSN47otnp04bMgLw-6UlPt_8WrHqk3Cz4n-lnKFET0Jrpp7BGtkx7BVNQQRta333v5soUqXHuDhXVUlJEx4WFK3QTnGwguM" />
+                <img alt="SiAju SKPP Logo" class="h-12 w-auto brightness-0 invert"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuATm778DoYQoQI0DRrQkR9is3lYMHjj_X2f44ilX4DKPfHuUqIeoPt1nM-xAD-RTr0o94gg90VS8snkRsahFf4XED83EFqAV6nJVJ4DWUVq-k2kJrbj0qARIfKO1Qt9qiDcWLUQ3CnbuT2XoYuSAPWgsOGucU719UOwr9Qb-gxNGw5fKSN47otnp04bMgLw-6UlPt_8WrHqk3Cz4n-lnKFET0Jrpp7BGtkx7BVNQQRta333v5soUqXHuDhXVUlJEx4WFK3QTnGwguM" />
                 <span class="font-headline-md text-headline-md text-white font-bold">SiAju SKPP</span>
             </div>
-            
+
             <div class="space-y-8">
                 <h1 class="font-headline-xl text-headline-xl text-white leading-tight">
                     Selamat Datang<br />
                     <span class="text-secondary-fixed">di SiAju SKPP</span>
                 </h1>
                 <p class="text-body-lg text-white/80 max-w-md">
-                    Masuk ke akun Anda untuk mengajukan berkas kependudukan dan perizinan secara online. 
-                    Lebih cepat, lebih mudah, tanpa antre.
+                    Masuk ke akun Anda untuk mengajukan berkas SKPP secara online.
                 </p>
-                
-                <div class="flex items-center gap-6 pt-4">
+
+                {{-- <div class="flex items-center gap-6 pt-4">
                     <div class="flex -space-x-3">
-                        <div class="w-12 h-12 rounded-full border-2 border-primary bg-surface-container flex items-center justify-center overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxtBoMNLPhyzDvCHEXbykq57skVfjhVFe3VFo5RPh83XO3Oq5cMWH7kic_RqdHzEtMt8yJudFBo6MQBdYsLMTz4tHPZam6nvcqdVDlpl5FPQRTlabrc9bft9Me2wvtLjW4B8_Q6iUI81FTuAl4ob30utiPBcuuO_hI_lycBGmP8Bd8Ompp1BPJ3wTiJGICsLIp-wBH5DHLUfFLvb8wDb2iGlITf5Es36czIm6LWL7rp14XDLk_dkGiE2X43c34KhYtd0ApMq5ReEA" />
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-primary bg-surface-container flex items-center justify-center overflow-hidden">
+                            <img class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxtBoMNLPhyzDvCHEXbykq57skVfjhVFe3VFo5RPh83XO3Oq5cMWH7kic_RqdHzEtMt8yJudFBo6MQBdYsLMTz4tHPZam6nvcqdVDlpl5FPQRTlabrc9bft9Me2wvtLjW4B8_Q6iUI81FTuAl4ob30utiPBcuuO_hI_lycBGmP8Bd8Ompp1BPJ3wTiJGICsLIp-wBH5DHLUfFLvb8wDb2iGlITf5Es36czIm6LWL7rp14XDLk_dkGiE2X43c34KhYtd0ApMq5ReEA" />
                         </div>
-                        <div class="w-12 h-12 rounded-full border-2 border-primary bg-surface-container flex items-center justify-center overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7YELkXJlhIsc5qEzZbCLRWIJr0u3DSyIZKttQhtLhava5_xhUL4cldIXd5YOLBLejpCeVXOAKfEmVIVZK_2E7chY2-KqIe6UNwXKm-nQsiWvbH-Dy3wVHCeQ6AlRiPD5UFF9rTv1q8Oeq_Gn43NWMKY9eDbrXVwcd4eviaslEJBgvcA7SC-Im4gRt8Y1a76b1LUB-B0TLuT9P_8htSQFthMAQLXY7654sl49VrTLzgh_u-EhEExcBD2NOLI0t4t8s4aqQipQlo0s" />
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-primary bg-surface-container flex items-center justify-center overflow-hidden">
+                            <img class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7YELkXJlhIsc5qEzZbCLRWIJr0u3DSyIZKttQhtLhava5_xhUL4cldIXd5YOLBLejpCeVXOAKfEmVIVZK_2E7chY2-KqIe6UNwXKm-nQsiWvbH-Dy3wVHCeQ6AlRiPD5UFF9rTv1q8Oeq_Gn43NWMKY9eDbrXVwcd4eviaslEJBgvcA7SC-Im4gRt8Y1a76b1LUB-B0TLuT9P_8htSQFthMAQLXY7654sl49VrTLzgh_u-EhEExcBD2NOLI0t4t8s4aqQipQlo0s" />
                         </div>
-                        <div class="w-12 h-12 rounded-full border-2 border-primary bg-secondary flex items-center justify-center">
+                        <div
+                            class="w-12 h-12 rounded-full border-2 border-primary bg-secondary flex items-center justify-center">
                             <span class="text-[10px] text-on-secondary font-bold">+5k</span>
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-white/80">
                         Telah dipercaya oleh <span class="text-secondary-fixed font-bold">5,000+</span> warga
                     </p>
-                </div>
+                </div> --}}
             </div>
-            
+
             <div class="space-y-2">
                 <div class="flex items-center gap-3 text-white/60">
                     <span class="material-symbols-outlined text-secondary-fixed">verified_badge</span>
                     <span class="font-label-sm text-label-sm">Data aman dan terlindungi</span>
                 </div>
-                <div class="flex items-center gap-3 text-white/60">
+                {{-- <div class="flex items-center gap-3 text-white/60">
                     <span class="material-symbols-outlined text-secondary-fixed">support_agent</span>
                     <span class="font-label-sm text-label-sm">Bantuan 24/7 tersedia</span>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -167,7 +178,8 @@
         <div class="w-full max-w-md space-y-8">
             <!-- Mobile Logo -->
             <div class="lg:hidden flex items-center justify-center gap-3 mb-8">
-                <img alt="SiAju SKPP Logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATm778DoYQoQI0DRrQkR9is3lYMHjj_X2f44ilX4DKPfHuUqIeoPt1nM-xAD-RTr0o94gg90VS8snkRsahFf4XED83EFqAV6nJVJ4DWUVq-k2kJrbj0qARIfKO1Qt9qiDcWLUQ3CnbuT2XoYuSAPWgsOGucU719UOwr9Qb-gxNGw5fKSN47otnp04bMgLw-6UlPt_8WrHqk3Cz4n-lnKFET0Jrpp7BGtkx7BVNQQRta333v5soUqXHuDhXVUlJEx4WFK3QTnGwguM" />
+                <img alt="SiAju SKPP Logo" class="h-10 w-auto"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuATm778DoYQoQI0DRrQkR9is3lYMHjj_X2f44ilX4DKPfHuUqIeoPt1nM-xAD-RTr0o94gg90VS8snkRsahFf4XED83EFqAV6nJVJ4DWUVq-k2kJrbj0qARIfKO1Qt9qiDcWLUQ3CnbuT2XoYuSAPWgsOGucU719UOwr9Qb-gxNGw5fKSN47otnp04bMgLw-6UlPt_8WrHqk3Cz4n-lnKFET0Jrpp7BGtkx7BVNQQRta333v5soUqXHuDhXVUlJEx4WFK3QTnGwguM" />
                 <span class="font-headline-md text-headline-md text-primary font-bold">SiAju SKPP</span>
             </div>
 
@@ -180,16 +192,16 @@
 
             <!-- Error Messages -->
             @if ($errors->any())
-                <div class="bg-error-container border border-error/20 rounded-lg p-4">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-error">error</span>
-                        <div class="flex-1">
-                            @foreach ($errors->all() as $error)
-                                <p class="text-sm text-error font-label-sm">{{ $error }}</p>
-                            @endforeach
-                        </div>
+            <div class="bg-error-container border border-error/20 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-error">error</span>
+                    <div class="flex-1">
+                        @foreach ($errors->all() as $error)
+                        <p class="text-sm text-error font-label-sm">{{ $error }}</p>
+                        @endforeach
                     </div>
                 </div>
+            </div>
             @endif
 
             <form action="{{ route('login.submit') }}" method="POST" class="space-y-6">
@@ -200,17 +212,12 @@
                         Username
                     </label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            name="username" 
-                            value="{{ old('username') }}"
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
+                        <input type="text" id="username" name="username" value="{{ old('username') }}"
                             placeholder="Masukkan username"
                             class="w-full pl-12 pr-4 py-3.5 bg-surface-container border border-outline rounded-lg text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-surface-tint focus:border-surface-tint transition-all font-body-md text-body-md @error('username') border-error focus:ring-error @enderror"
-                            required 
-                            autofocus
-                        />
+                            required autofocus />
                     </div>
                 </div>
 
@@ -220,20 +227,13 @@
                         Password
                     </label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan password"
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+                        <input type="password" id="password" name="password" placeholder="Masukkan password"
                             class="w-full pl-12 pr-12 py-3.5 bg-surface-container border border-outline rounded-lg text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-surface-tint focus:border-surface-tint transition-all font-body-md text-body-md @error('password') border-error focus:ring-error @enderror"
-                            required
-                        />
-                        <button 
-                            type="button" 
-                            id="togglePassword"
-                            class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors"
-                        >
+                            required />
+                        <button type="button" id="togglePassword"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors">
                             <span class="material-symbols-outlined" id="eyeIcon">visibility</span>
                         </button>
                     </div>
@@ -242,19 +242,19 @@
                 <!-- Remember Me -->
                 <div class="flex items-center justify-between">
                     <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" name="remember" class="w-4 h-4 rounded border-outline text-primary focus:ring-surface-tint cursor-pointer">
+                        <input type="checkbox" name="remember"
+                            class="w-4 h-4 rounded border-outline text-primary focus:ring-surface-tint cursor-pointer">
                         <span class="font-label-sm text-label-sm text-on-surface-variant">Ingat saya</span>
                     </label>
-                    <a href="#" class="font-label-sm text-label-sm text-surface-tint hover:text-primary transition-colors">
+                    <a href="#"
+                        class="font-label-sm text-label-sm text-surface-tint hover:text-primary transition-colors">
                         Lupa password?
                     </a>
                 </div>
 
                 <!-- Submit Button -->
-                <button 
-                    type="submit"
-                    class="w-full py-3.5 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary/90 active:opacity-80 scale-95 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-                >
+                <button type="submit"
+                    class="w-full py-3.5 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary/90 active:opacity-80 scale-95 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                     Masuk
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </button>
@@ -274,15 +274,17 @@
 
             <!-- Register Link -->
             <p class="text-center text-body-md text-on-surface-variant">
-                Belum punya akun? 
-                <a href="#" class="font-label-md text-label-md text-surface-tint hover:text-primary font-semibold transition-colors">
+                Belum punya akun?
+                <a href="#"
+                    class="font-label-md text-label-md text-surface-tint hover:text-primary font-semibold transition-colors">
                     Daftar Sekarang
                 </a>
             </p>
 
             <!-- Back to Home -->
             <div class="text-center pt-4">
-                <a href="/" class="inline-flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">
+                <a href="/"
+                    class="inline-flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">
                     <span class="material-symbols-outlined text-lg">arrow_back</span>
                     Kembali ke Beranda
                 </a>
@@ -308,4 +310,5 @@
         });
     </script>
 </body>
+
 </html>
