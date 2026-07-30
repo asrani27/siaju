@@ -23,9 +23,10 @@
                         <span class="w-2 h-2 bg-success rounded-full animate-pulse-soft"></span>
                         <span class="text-white/90">Layanan tersedia 24/7</span>
                     </div>
-                    <h3 class="font-heading font-bold text-2xl lg:text-4xl">Halo, {{ auth()->user()->name ?? 'Admin SKPD' }}!</h3>
+                    <h3 class="font-heading font-bold text-2xl lg:text-4xl">Halo, {{ auth()->user()->name ?? 'Admin
+                        SKPD' }}!</h3>
                     <p class="text-white/80 max-w-xl text-sm lg:text-base">
-                        Kelola pengajuan layanan administrasi {{ $skpd->nama_skpd ?? 'SKPD' }} Anda. 
+                        Kelola pengajuan layanan administrasi {{ $skpd->nama_skpd ?? 'SKPD' }} Anda.
                         Pantau status dan lihat pengajuan dari seluruh pegawai.
                     </p>
                 </div>
@@ -48,44 +49,52 @@
         <div class="bg-white rounded-2xl shadow-card p-6 animate-slide-up" style="animation-delay: 0.1s">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                     </svg>
                 </div>
             </div>
             <p class="text-sm text-text-muted mb-1">Total Pengajuan</p>
             <p class="text-3xl font-bold text-text">{{ $stats['total'] ?? 0 }}</p>
         </div>
-        
+
         <div class="bg-white rounded-2xl shadow-card p-6 animate-slide-up" style="animation-delay: 0.2s">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center text-warning">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                 </div>
             </div>
             <p class="text-sm text-text-muted mb-1">Dalam Proses</p>
             <p class="text-3xl font-bold text-text">{{ $stats['dalam_proses'] ?? 0 }}</p>
         </div>
-        
+
         <div class="bg-white rounded-2xl shadow-card p-6 animate-slide-up" style="animation-delay: 0.3s">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center text-success">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                 </div>
             </div>
             <p class="text-sm text-text-muted mb-1">Selesai (Bulan Ini)</p>
             <p class="text-3xl font-bold text-text">{{ $stats['selesai'] ?? 0 }}</p>
         </div>
-        
+
         <div class="bg-white rounded-2xl shadow-card p-6 animate-slide-up" style="animation-delay: 0.4s">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl bg-error/10 flex items-center justify-center text-error">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                 </div>
             </div>
@@ -194,8 +203,8 @@
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     @if($pengajuan->status === 'selesai' && $pengajuan->sk_file)
-                                        @include('skpd.partials.action-view-sk')
-                                        @include('skpd.partials.action-download-sk')
+                                    @include('skpd.partials.action-view-sk')
+                                    @include('skpd.partials.action-download-sk')
                                     @endif
                                     @include('skpd.partials.action-detail')
                                 </div>
@@ -225,7 +234,7 @@
     <!-- Footer -->
     <footer
         class="pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
-        <p>© 2024 SiAju - Sistem Informasi Administratif Warga.</p>
+        <p>© 2026 SiAju - Sistem Informasi Administratif Warga.</p>
         <div class="flex items-center gap-6">
             <a class="hover:text-primary transition-colors" href="#">Bantuan</a>
             <a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>

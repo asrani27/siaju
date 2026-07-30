@@ -226,7 +226,7 @@
     <!-- Footer -->
     <footer
         class="pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
-        <p>© 2024 SiAju - Sistem Informasi Administratif Warga.</p>
+        <p>© 2026 SiAju - Sistem Informasi Administratif Warga.</p>
         <div class="flex items-center gap-6">
             <a class="hover:text-primary transition-colors" href="#">Bantuan</a>
             <a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>

@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <p class="font-label-sm text-label-sm text-on-surface-variant">
-                           Layanan Mandiri Pengajuan SKPP secara online
+                            Layanan Mandiri Pengajuan SKPP secara online
                         </p>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
         </div>
         <div class="w-full border-t border-white/10 py-6">
             <div class="max-w-7xl mx-auto px-margin-desktop text-center">
-                <p class="text-on-primary-container font-body-sm text-body-sm">© 2024 SiAju SKPP. Hak Cipta Dilindungi
+                <p class="text-on-primary-container font-body-sm text-body-sm">© 2026 SiAju SKPP. Hak Cipta Dilindungi
                     Undang-Undang.</p>
             </div>
         </div>

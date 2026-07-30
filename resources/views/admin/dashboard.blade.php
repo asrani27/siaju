@@ -236,43 +236,44 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             @if($pengajuan->status == 'dikirim')
-                                {{-- Tombol Proses: mengubah status menjadi diproses dan menyimpan ke pengajuan_history --}}
-                                <form action="{{ route('admin.pengajuan.prosesVerifikasi', $pengajuan->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit"
-                                        class="px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary text-primary hover:text-white text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-                                        </svg>
-                                        Proses
-                                    </button>
-                                </form>
+                            {{-- Tombol Proses: mengubah status menjadi diproses dan menyimpan ke pengajuan_history --}}
+                            <form action="{{ route('admin.pengajuan.prosesVerifikasi', $pengajuan->id) }}" method="POST"
+                                class="inline">
+                                @csrf
+                                <button type="submit"
+                                    class="px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary text-primary hover:text-white text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                    </svg>
+                                    Proses
+                                </button>
+                            </form>
                             @elseif($pengajuan->status == 'diproses')
-                                {{-- Tombol Verifikasi: langsung menampilkan halaman show tanpa mengubah status --}}
-                                <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
-                                    class="px-3 py-1.5 rounded-lg bg-success/10 hover:bg-success text-success hover:text-white text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
-                                    Verifikasi
-                                </a>
+                            {{-- Tombol Verifikasi: langsung menampilkan halaman show tanpa mengubah status --}}
+                            <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
+                                class="px-3 py-1.5 rounded-lg bg-success/10 hover:bg-success text-success hover:text-white text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
+                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                Verifikasi
+                            </a>
                             @elseif(in_array($pengajuan->status, ['selesai', 'ditolak', 'revisi']))
-                                {{-- Tombol Show: menampilkan halaman detail pengajuan --}}
-                                <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
-                                    class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    </svg>
-                                    Detail
-                                </a>
+                            {{-- Tombol Show: menampilkan halaman detail pengajuan --}}
+                            <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
+                                class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 text-sm font-medium transition-smooth flex items-center gap-1.5 inline-flex">
+                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                                Detail
+                            </a>
                             @endif
                         </td>
                     </tr>
@@ -350,7 +351,7 @@
     <!-- Footer -->
     <footer
         class="pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
-        <p>© 2024 SiAju Admin - Sistem Informasi Administratif Terintegrasi.</p>
+        <p>© 2026 SiAju Admin - Sistem Informasi Administratif Terintegrasi.</p>
         <div class="flex items-center gap-6">
             <a class="hover:text-primary transition-colors" href="#">Syarat & Ketentuan</a>
             <a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
