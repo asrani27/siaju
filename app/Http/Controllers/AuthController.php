@@ -33,6 +33,8 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role === 'admin') {
                 return redirect()->intended('/admin/dashboard');
+            } elseif ($user->role === 'skpd') {
+                return redirect()->intended('/skpd/dashboard');
             }
 
             return redirect()->intended('/user/dashboard');

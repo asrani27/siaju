@@ -4,9 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Layanan;
+use App\Models\Pegawai;
 use App\Models\Pengajuan;
 use App\Models\PengajuanFile;
 use App\Models\PengajuanHistory;
+use App\Models\PengajuanRevisi;
+use App\Models\Skpd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +26,19 @@ class PengajuanController extends Controller
             ->orderBy('nama')
             ->get();
 
-        return view('user.pengajuan.create', compact('layanans'));
+        // Get user's SKPD from Pegawai model
+        $pegawai = Pegawai::where('user_id', auth()->id())->first();
+        
+        // If user has a SKPD (is a Pegawai), show only their SKPD
+        $skpds = collect();
+        $userSkpdId = null;
+        
+        if ($pegawai && $pegawai->skpd_id) {
+            $userSkpdId = $pegawai->skpd_id;
+            $skpds = Skpd::where('id', $pegawai->skpd_id)->get();
+        }
+
+        return view('user.pengajuan.create', compact('layanans', 'skpds', 'userSkpdId'));
     }
 
     /**
@@ -33,8 +48,24 @@ class PengajuanController extends Controller
     {
         $request->validate([
             'layanan_id' => 'required|exists:layanan,id',
+            'skpd_id' => 'required_without:skpd_auto|exists:skpd,id',
             'catatan' => 'nullable|string|max:1000',
         ]);
+        
+        // Use skpd_id from request or auto-set value
+        $skpdId = $request->skpd_id;
+        
+        // If user is a Pegawai with SKPD, use their SKPD
+        if (empty($skpdId)) {
+            $pegawai = Pegawai::where('user_id', auth()->id())->first();
+            if ($pegawai && $pegawai->skpd_id) {
+                $skpdId = $pegawai->skpd_id;
+            }
+        }
+        
+        if (empty($skpdId)) {
+            return back()->with('error', 'SKPD tidak ditemukan.')->withInput();
+        }
 
         // Generate nomor pengajuan
         $tanggal = Carbon::now()->format('Ymd');
@@ -46,6 +77,7 @@ class PengajuanController extends Controller
             'nomor_pengajuan' => $nomorPengajuan,
             'user_id' => auth()->id(),
             'layanan_id' => $request->layanan_id,
+            'skpd_id' => $skpdId,
             'tanggal_pengajuan' => Carbon::now(),
             'status' => Pengajuan::STATUS_DRAFT,
             'catatan_user' => $request->catatan,

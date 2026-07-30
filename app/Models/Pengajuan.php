@@ -29,6 +29,7 @@ class Pengajuan extends Model
         'nomor_pengajuan',
         'user_id',
         'layanan_id',
+        'skpd_id',
         'tanggal_pengajuan',
         'status',
         'catatan_user',
@@ -55,6 +56,14 @@ class Pengajuan extends Model
     public function layanan(): BelongsTo
     {
         return $this->belongsTo(Layanan::class);
+    }
+
+    /**
+     * Get the skpd that owns the pengajuan.
+     */
+    public function skpd(): BelongsTo
+    {
+        return $this->belongsTo(Skpd::class);
     }
 
     /**

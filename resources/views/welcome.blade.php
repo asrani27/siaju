@@ -165,8 +165,8 @@
                         Secara Online
                     </h1>
                     <p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg">
-                        Wujudkan efisiensi administrasi publik dengan platform digital mandiri. Ajukan berkas
-                        kependudukan dan perizinan kapan saja, di mana saja tanpa harus mengantre.
+                        Layanan Digital Pengajuan dan Penerbitan Surat Keterangan Penghentian Pembayaran (SKPP) ASN
+                        Pemko Banjarmasin
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
                         <button
@@ -199,8 +199,7 @@
                             </div>
                         </div>
                         <p class="font-label-sm text-label-sm text-on-surface-variant">
-                            Telah melayani lebih dari <span class="text-primary font-bold">5,000+</span> warga setiap
-                            bulan.
+                           Layanan Mandiri Pengajuan SKPP secara online
                         </p>
                     </div>
                 </div>
@@ -218,8 +217,7 @@
                                     <span class="material-symbols-outlined text-secondary-fixed">timer</span>
                                     <span class="font-bold">Proses Cepat</span>
                                 </div>
-                                <p class="text-[12px] opacity-80 leading-snug">Berkas diverifikasi dalam kurang dari 24
-                                    jam kerja.</p>
+                                <p class="text-[12px] opacity-80 leading-snug">proses cepat, efektif dan paperless</p>
                             </div>
                         </div>
                     </div>

@@ -2,12 +2,12 @@
 
 @section('title', 'Ajukan Permohonan')
 @section('header_title', 'Ajukan Permohonan')
-@section('header_subtitle', 'Ajukan permohonan layanan baru')
+@section('header_subtitle', 'Ajukan permohonan layanan baru untuk pegawai')
 
 @section('content')
 <div class="mx-auto max-w-2xl space-y-6">
     {{-- Back Button --}}
-    <a href="{{ route('user.dashboard') }}"
+    <a href="{{ route('skpd.dashboard') }}"
         class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-smooth">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -19,30 +19,29 @@
     <div class="bg-white rounded-2xl shadow-card overflow-hidden">
         <div class="px-6 py-5 border-b border-gray-100">
             <h2 class="text-lg font-heading font-bold text-text">Form Pengajuan Permohonan</h2>
-            <p class="text-sm text-text-muted mt-1">Pilih layanan yang diinginkan untuk memulai pengajuan</p>
+            <p class="text-sm text-text-muted mt-1">Ajukan permohonan layanan untuk pegawai {{ $skpd->nama_skpd ?? '' }}</p>
         </div>
 
-        <form action="{{ route('user.pengajuan.store') }}" method="POST" class="p-6">
+        <form action="{{ route('skpd.pengajuan.store') }}" method="POST" class="p-6">
             @csrf
 
             <div class="space-y-5">
-                {{-- Select SKPD (Hidden if only one SKPD) --}}
-                @if($skpds->count() > 1)
+                {{-- Select Pegawai --}}
                 <div>
-                    <label for="skpd_id" class="block text-sm font-medium text-text mb-2">
-                        SKPD <span class="text-error">*</span>
+                    <label for="pegawai_id" class="block text-sm font-medium text-text mb-2">
+                        Pilih Pegawai <span class="text-error">*</span>
                     </label>
-                    <select id="skpd_id" name="skpd_id"
-                        class="w-full px-4 py-3 bg-surface rounded-xl border {{ $errors->has('skpd_id') ? 'border-error focus:ring-error/20' : 'border-gray-200 focus:ring-accent/20' }} focus:ring-2 transition-smooth text-sm cursor-pointer appearance-none"
+                    <select id="pegawai_id" name="pegawai_id"
+                        class="w-full px-4 py-3 bg-surface rounded-xl border {{ $errors->has('pegawai_id') ? 'border-error focus:ring-error/20' : 'border-gray-200 focus:ring-accent/20' }} focus:ring-2 transition-smooth text-sm cursor-pointer appearance-none"
                         style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23505570%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em;">
-                        @foreach($skpds as $skpd)
-                        <option value="{{ $skpd->id }}" {{ (old('skpd_id')==$skpd->id || (isset($userSkpdId) &&
-                            $userSkpdId == $skpd->id)) ? 'selected' : '' }}>
-                            {{ $skpd->kode_skpd }} - {{ $skpd->nama_skpd }}
+                        <option value="">-- Pilih Pegawai --</option>
+                        @foreach($pegawais as $pegawai)
+                        <option value="{{ $pegawai->id }}" {{ old('pegawai_id')==$pegawai->id ? 'selected' : '' }}>
+                            {{ $pegawai->nama }} ({{ $pegawai->nip }})
                         </option>
                         @endforeach
                     </select>
-                    @error('skpd_id')
+                    @error('pegawai_id')
                     <p class="mt-2 text-sm text-error flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,11 +50,10 @@
                         {{ $message }}
                     </p>
                     @enderror
+                    @if($pegawais->isEmpty())
+                    <p class="mt-2 text-sm text-text-muted">Tidak ada pegawai dengan akun pengguna dalam SKPD ini.</p>
+                    @endif
                 </div>
-                @elseif($skpds->count() == 1)
-                {{-- Hidden input if only one SKPD --}}
-                <input type="hidden" name="skpd_id" value="{{ $skpds->first()->id }}">
-                @endif
 
                 {{-- Select Layanan --}}
                 <div>
@@ -109,7 +107,7 @@
 
             {{-- Form Actions --}}
             <div class="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-gray-100">
-                <a href="{{ route('user.dashboard') }}"
+                <a href="{{ route('skpd.dashboard') }}"
                     class="px-5 py-2.5 bg-surface text-text rounded-xl font-medium hover:bg-surface-high transition-smooth">
                     Batal
                 </a>

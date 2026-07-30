@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\BantuanController;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\PersyaratanController;
 use App\Http\Controllers\Admin\SkpdController;
+use App\Http\Controllers\Skpd\DashboardController as SkpdDashboardController;
+use App\Http\Controllers\Skpd\PegawaiController as SkpdPegawaiController;
+use App\Http\Controllers\Skpd\ProfilController as SkpdProfilController;
+use App\Http\Controllers\Skpd\PengajuanController as SkpdPengajuanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +49,42 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/profil', [ProfilController::class, 'index'])->name('user.profil.index');
     Route::put('/profil', [ProfilController::class, 'update'])->name('user.profil.update');
     Route::post('/profil/password', [ProfilController::class, 'changePassword'])->name('user.profil.password');
+});
+
+// SKPD Routes
+Route::prefix('skpd')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [SkpdDashboardController::class, 'index'])->name('skpd.dashboard');
+    
+    Route::get('/pengajuan', function () {
+        return view('skpd.pengajuan.index');
+    })->name('skpd.pengajuan.index');
+    
+    Route::get('/pengajuan/create', [SkpdPengajuanController::class, 'create'])->name('skpd.pengajuan.create');
+    Route::post('/pengajuan', [SkpdPengajuanController::class, 'store'])->name('skpd.pengajuan.store');
+    
+    Route::get('/pengajuan/{pengajuan}', function (\App\Models\Pengajuan $pengajuan) {
+        // Get related data
+        $persyaratans = $pengajuan->layanan ? $pengajuan->layanan->persyaratans : collect([]);
+        $histories = $pengajuan->histories()->with('user')->orderBy('created_at', 'desc')->get();
+        $revisions = $pengajuan->revisions()->orderBy('created_at', 'desc')->get();
+        
+        return view('skpd.pengajuan.show', compact('pengajuan', 'persyaratans', 'histories', 'revisions'));
+    })->name('skpd.pengajuan.show');
+    
+    Route::post('/pengajuan/{pengajuan}/upload', [SkpdPengajuanController::class, 'uploadStore'])->name('skpd.pengajuan.upload.store');
+    Route::post('/pengajuan/{pengajuan}/kirim', [SkpdPengajuanController::class, 'kirim'])->name('skpd.pengajuan.kirim');
+    
+    Route::get('/pegawai', [SkpdPegawaiController::class, 'index'])->name('skpd.pegawai.index');
+    Route::get('/pegawai/create', [SkpdPegawaiController::class, 'create'])->name('skpd.pegawai.create');
+    Route::post('/pegawai', [SkpdPegawaiController::class, 'store'])->name('skpd.pegawai.store');
+    Route::get('/pegawai/{pegawai}', [SkpdPegawaiController::class, 'show'])->name('skpd.pegawai.show');
+    Route::get('/pegawai/{pegawai}/edit', [SkpdPegawaiController::class, 'edit'])->name('skpd.pegawai.edit');
+    Route::put('/pegawai/{pegawai}', [SkpdPegawaiController::class, 'update'])->name('skpd.pegawai.update');
+    Route::delete('/pegawai/{pegawai}', [SkpdPegawaiController::class, 'destroy'])->name('skpd.pegawai.destroy');
+    
+    Route::get('/profil', [SkpdProfilController::class, 'index'])->name('skpd.profil.index');
+    Route::put('/profil', [SkpdProfilController::class, 'update'])->name('skpd.profil.update');
+    Route::post('/profil/password', [SkpdProfilController::class, 'changePassword'])->name('skpd.profil.password');
 });
 
 // Admin Routes

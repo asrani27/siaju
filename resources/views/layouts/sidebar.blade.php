@@ -20,6 +20,8 @@
         @auth
             @if(auth()->user()->role === 'admin')
                 @include('layouts.partials.menu_admin')
+            @elseif(auth()->user()->role === 'skpd')
+                @include('layouts.partials.menu_skpd')
             @else
                 @include('layouts.partials.menu_user')
             @endif
