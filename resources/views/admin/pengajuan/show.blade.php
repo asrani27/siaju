@@ -143,10 +143,12 @@
                             stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                     </a>
-                    <a href="{{ asset('storage/' . $pengajuan->sk_file) }}" download="{{ basename($pengajuan->sk_file) }}"
+                    <a href="{{ asset('storage/' . $pengajuan->sk_file) }}"
+                        download="{{ basename($pengajuan->sk_file) }}"
                         class="p-2 rounded-lg bg-white hover:bg-success/10 transition-smooth text-text-muted hover:text-success">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -213,7 +215,7 @@
                     </div>
                     <div class="flex-1">
                         <p class="text-lg font-semibold text-text">{{ $pengajuan->user->name ?? 'N/A' }}</p>
-                        <p class="text-sm text-text-muted">NIK: {{ $pengajuan->user->username ?? 'N/A' }}</p>
+                        <p class="text-sm text-text-muted">NIP: {{ $pengajuan->user->username ?? 'N/A' }}</p>
                         <p class="text-sm text-text-muted">Email: {{ $pengajuan->user->email ?? 'N/A' }}</p>
                         <p class="text-sm text-text-muted">Telepon: {{ $pengajuan->user->no_telp ?? 'N/A' }}</p>
                     </div>
@@ -621,7 +623,8 @@
             <h3 class="font-heading font-bold text-lg text-text flex items-center gap-2">
                 <svg class="w-5 h-5 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 Konfirmasi Persetujuan
             </h3>
@@ -632,8 +635,8 @@
             <div class="p-6 space-y-4">
                 <div class="text-center mb-4">
                     <div class="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg class="w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor">
+                        <svg class="w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                     </div>
@@ -645,7 +648,8 @@
                         class="w-full px-4 py-2.5 bg-surface rounded-xl text-sm border-0 focus:ring-2 focus:ring-success/20 resize-none"
                         placeholder="Tambahkan catatan persetujuan..."></textarea>
                 </div>
-                <p class="text-xs text-success">Pengajuan akan diubah statusnya menjadi "Selesai" dan dicatat dalam riwayat.</p>
+                <p class="text-xs text-success">Pengajuan akan diubah statusnya menjadi "Selesai" dan dicatat dalam
+                    riwayat.</p>
             </div>
             <div class="p-6 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onclick="hideApproveModal()"
@@ -711,14 +715,15 @@
                 Upload SK File
             </h3>
         </div>
-        <form action="{{ route('admin.pengajuan.uploadSk', $pengajuan->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.pengajuan.uploadSk', $pengajuan->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <div class="p-6 space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-text-muted mb-2">Pilih File SK</label>
                     <div class="relative">
-                        <input type="file" name="sk_file" id="sk_file" accept=".pdf,.doc,.docx" required
-                            class="hidden" onchange="updateFileName(this)">
+                        <input type="file" name="sk_file" id="sk_file" accept=".pdf,.doc,.docx" required class="hidden"
+                            onchange="updateFileName(this)">
                         <label for="sk_file"
                             class="flex items-center justify-center gap-2 px-4 py-3 bg-surface border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-success hover:bg-success/5 transition-smooth">
                             <svg class="w-5 h-5 text-text-muted" xmlns="http://www.w3.org/2000/svg" fill="none"

@@ -128,7 +128,7 @@
                 <div class="relative">
                     <input name="search" value="{{ request('search') }}"
                         class="pl-10 pr-4 py-2.5 bg-surface rounded-xl text-sm border-0 focus:ring-2 focus:ring-accent/20 w-full"
-                        placeholder="Nomor pengajuan, nama, NIK..." type="text">
+                        placeholder="Nomor pengajuan, nama, NIP..." type="text">
                     <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor">
@@ -218,7 +218,7 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-semibold text-text">{{ $item->user->name ?? 'N/A' }}</p>
-                                    <p class="text-xs text-text-muted">NIK: {{ substr($item->user->username ??
+                                    <p class="text-xs text-text-muted">NIP: {{ substr($item->user->username ??
                                         '0000000000000000', 0, 4) . '**********' . substr($item->user->nik ?? '0000',
                                         -4) }}</p>
                                 </div>

@@ -187,7 +187,7 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-semibold text-text">{{ $pengajuan->user->name ?? 'N/A' }}</p>
-                                    <p class="text-xs text-text-muted">NIK: {{ substr($pengajuan->user->username ??
+                                    <p class="text-xs text-text-muted">NIP: {{ substr($pengajuan->user->username ??
                                         '0000000000000000', 0, 4) . '**********' . substr($pengajuan->user->username ??
                                         '0000', -4) }}</p>
                                 </div>
