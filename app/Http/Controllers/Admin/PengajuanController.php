@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
+use App\Services\SKPdfService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -322,10 +323,17 @@ class PengajuanController extends Controller
         if ($request->hasFile('sk_file')) {
             $file = $request->file('sk_file');
             $fileName = 'SK_' . $pengajuan->nomor_pengajuan . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('sk-files', $fileName, 'public');
+            $tempPath = $file->getRealPath();
+            
+            // Use SKPdfService to generate PDF with pas photo
+            $skPdfService = new SKPdfService();
+            $outputPath = $skPdfService->generateSkWithPhoto($pengajuan, $tempPath);
+            
+            // Get the relative path for storage
+            $relativePath = 'sk-files/' . basename($outputPath);
             
             // Update sk_file field
-            $pengajuan->sk_file = $filePath;
+            $pengajuan->sk_file = $relativePath;
             $pengajuan->save();
 
             // Create history record
@@ -333,12 +341,12 @@ class PengajuanController extends Controller
                 'user_id' => Auth::id(),
                 'status' => 'selesai',
                 'judul' => 'SK File Diupload',
-                'keterangan' => 'File SK (' . $file->getClientOriginalName() . ') telah diupload.',
+                'keterangan' => 'File SK (' . $file->getClientOriginalName() . ') dengan pas foto telah diupload.',
             ]);
 
             return redirect()
                 ->back()
-                ->with('success', 'File SK berhasil diupload.');
+                ->with('success', 'File SK berhasil diupload dengan pas foto.');
         }
 
         return redirect()
