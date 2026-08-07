@@ -169,15 +169,15 @@
                         Pemko Banjarmasin
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <button
+                        <a href="{{ route('login') }}"
                             class="px-8 py-4 bg-primary text-on-primary rounded-lg font-label-md text-label-md flex items-center gap-2 shadow-lg hover:shadow-xl transition-all">
                             Mulai Pengajuan
                             <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                        <button
+                        </a>
+                        {{-- <button
                             class="px-8 py-4 border-2 border-primary text-primary rounded-lg font-label-md text-label-md hover:bg-primary/5 transition-colors">
                             Lihat Status Berkas
-                        </button>
+                        </button> --}}
                     </div>
                     <div class="flex items-center gap-6 pt-6 border-t border-outline-variant">
                         <div class="flex -space-x-3">
