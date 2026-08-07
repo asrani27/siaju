@@ -159,4 +159,56 @@ class PengajuanController extends Controller
             ->route('skpd.pengajuan.show', $pengajuan)
             ->with('success', 'File persyaratan berhasil diupload.');
     }
+
+    /**
+     * Send/Kirim pengajuan
+     */
+    public function kirim(Pengajuan $pengajuan)
+    {
+        // Get the SKPD associated with the current user
+        $user = auth()->user();
+        $skpd = \App\Models\Skpd::where('user_id', $user->id)->first();
+        
+        // Check if pengajuan belongs to this SKPD
+        if ($pengajuan->skpd_id !== $skpd->id) {
+            return redirect()
+                ->route('skpd.pengajuan.index')
+                ->with('error', 'Anda tidak memiliki akses ke pengajuan ini.');
+        }
+
+        // Validate that pengajuan can be sent
+        if (!in_array($pengajuan->status, [Pengajuan::STATUS_DRAFT, Pengajuan::STATUS_REVISI])) {
+            return redirect()
+                ->route('skpd.pengajuan.show', $pengajuan)
+                ->with('error', 'Pengajuan tidak dapat dikirim.');
+        }
+
+        // Check if all requirements are uploaded
+        $persyaratans = $pengajuan->layanan->persyaratans ?? collect();
+        $uploadedCount = $pengajuan->files()->count();
+        
+        if ($uploadedCount < $persyaratans->count()) {
+            return redirect()
+                ->route('skpd.pengajuan.show', $pengajuan)
+                ->with('error', 'Mohon upload semua dokumen persyaratan sebelum mengirim pengajuan.');
+        }
+
+        // Update status to 'dikirim'
+        $pengajuan->update([
+            'status' => Pengajuan::STATUS_DIKIRIM,
+        ]);
+
+        // Save to pengajuan_history
+        PengajuanHistory::create([
+            'pengajuan_id' => $pengajuan->id,
+            'status' => Pengajuan::STATUS_DIKIRIM,
+            'judul' => 'Pengajuan Dikirim oleh Admin SKPD',
+            'keterangan' => 'Pengajuan berhasil dikirim dan sedang menunggu verifikasi dari admin.',
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()
+            ->route('skpd.pengajuan.show', $pengajuan)
+            ->with('success', 'Pengajuan berhasil dikirim! Mohon tunggu verifikasi dari admin.');
+    }
 }
